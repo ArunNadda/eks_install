@@ -154,6 +154,8 @@ Parameters:
     Default: Disabled
   RoleArn:
     Type: String
+    Description: Role Arn of EKS Cluster
+    AllowedPattern: ^arn:(aws|aws-cn|aws-us-gov):iam::[0-9]{12}:.*|^$
     Default: ''
   AdditionalEKSAdminUserArn:
     Type: String

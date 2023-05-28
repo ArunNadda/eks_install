@@ -349,7 +349,7 @@ Parameters:
     Default: ''
 Resources:
   EKSStack:
-    Type: "AWS::EKS::Cluster"
+    Type: 'AWS::EKS::Cluster'
     Properties:
       Parameters:
         # Basic configuration

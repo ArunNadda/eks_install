@@ -180,19 +180,19 @@ Parameters:
     Type: AWS::EC2::VPC::Id
     Description: ID of your existing VPC (e.g., vpc-0343606e).
   PublicSubnet1ID:
-    Type: AWS::EC2::Subnet::Id
+    Type: String
     Description: >-
       ID of the public subnet in Availability Zone 1 of your existing VPC
       (example: subnet-a0246dcd).
     Default: ''
   PublicSubnet2ID:
-    Type: AWS::EC2::Subnet::Id
+    Type: String
     Description: >-
       ID of the public subnet in Availability Zone 2 of your existing VPC
       (example: subnet-b1236eea).
     Default: ''
   PublicSubnet3ID:
-    Type: AWS::EC2::Subnet::Id
+    Type: String
     Description: >-
       ID of the public subnet in Availability Zone 3 of your existing VPC
       (example: subnet-c3456aba).

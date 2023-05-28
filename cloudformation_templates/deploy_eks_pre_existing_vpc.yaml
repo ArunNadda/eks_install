@@ -360,6 +360,7 @@ Resources:
         # Bastion host configuration
         ProvisionBastionHost: !Ref ProvisionBastionHost
         # Amazon EKS configuration
+        RoleArn: !Ref RoleArn
         EKSClusterName: !Ref EKSClusterName
         EKSPublicAccessEndpoint: !Ref EKSPublicAccessEndpoint
         AdditionalEKSAdminUserArn: !Ref AdditionalEKSAdminUserArn

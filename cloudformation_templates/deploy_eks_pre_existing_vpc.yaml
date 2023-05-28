@@ -134,18 +134,14 @@ Parameters:
       your instance after it launches. Leave empty to proceed without a key
       pair. You would need to use AWS Systems Manager Session Manager to
       connect to the provisioned EC2 instances.
-    Default: ''
+    Default: 'testKeyPair'
   RemoteAccessCIDR:
     Type: String
     Description: >-
       Trusted IPv4 CIDR block or VPC prefix list that is permitted remote
       access to your instances if desired in addition to
       AWS Systems Manager (SSM) access.
-    AllowedPattern: ^(disabled-onlyssmaccess|pl-([0-9a-f]{8}|[0-9a-f]{17})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2])))$
-    ConstraintDescription: >-
-      Must be disabled-onlyssmaccess, an IPv4 CIDR block (x.x.x.x/x), or a
-      VPC prefix list (pl-01234567).
-    Default: disabled-onlyssmaccess
+    Default: ''
   EKSPublicAccessEndpoint:
     Type: String
     Description: >-
@@ -184,19 +180,19 @@ Parameters:
     Type: AWS::EC2::VPC::Id
     Description: ID of your existing VPC (e.g., vpc-0343606e).
   PublicSubnet1ID:
-    Type: String
+    Type: AWS::EC2::Subnet::Id
     Description: >-
       ID of the public subnet in Availability Zone 1 of your existing VPC
       (example: subnet-a0246dcd).
     Default: ''
   PublicSubnet2ID:
-    Type: String
+    Type: AWS::EC2::Subnet::Id
     Description: >-
       ID of the public subnet in Availability Zone 2 of your existing VPC
       (example: subnet-b1236eea).
     Default: ''
   PublicSubnet3ID:
-    Type: String
+    Type: AWS::EC2::Subnet::Id
     Description: >-
       ID of the public subnet in Availability Zone 3 of your existing VPC
       (example: subnet-c3456aba).
@@ -212,7 +208,7 @@ Parameters:
       ID of the private subnet in Availability Zone 2 of your existing VPC
       (example: subnet-be8b01ea).
   PrivateSubnet3ID:
-    Type: String
+    Type: AWS::EC2::Subnet::Id
     Description: >-
       ID of the private subnet in Availability Zone 3 of your existing VPC
       (example: subnet-abd39039).
@@ -247,7 +243,7 @@ Parameters:
     Type: String
     Description: Choose "Disabled" to skip creating a bastion host.
     AllowedValues: [Enabled, Disabled]
-    Default: Enabled
+    Default: Disabled
   OnDemandBastionPercentage:
     Type: Number
     Description: >-
@@ -262,7 +258,7 @@ Parameters:
     Description: >-
       Choose "Disabled" to skip deploying the AWS load balancer controller.
     AllowedValues: [Enabled, Disabled]
-    Default: Enabled
+    Default: Disabled
   CertManager:
     Type: String
     Description: >-
@@ -274,7 +270,7 @@ Parameters:
     Description: >-
       (Optional) Name for the EKS cluster. If left blank, one is
       auto-generated. This must be unique within the Region.
-    Default: ''
+    Default: 'TestEKSCluster'
   KubernetesVersion:
   # https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#kubernetes-release-calendar
     Type: String
@@ -293,11 +289,6 @@ Parameters:
       parameter in that stack. If left blank, a new config set is created using
       default values.
     Default: ''
-  TestSuite:
-    Type: String
-    Description: Deploys a test stack that tests Quick Start components.
-    AllowedValues: [Enabled, Disabled]
-    Default: Disabled
   CalicoIntegration:
     Type: String
     Description: For more information see https://www.projectcalico.org/.
@@ -343,10 +334,6 @@ Parameters:
       "Windows", an additional Amazon Linux node group is created.
     AllowedValues: [Amazon Linux 2, Bottlerocket, Windows]
     Default: Amazon Linux 2
-  OrgID:
-    Type: String
-    Description: Organization ID of your Anypoint.
-    Default: ''
 Resources:
   EKSStack:
     Type: 'AWS::EKS::Cluster'
@@ -380,7 +367,6 @@ Resources:
         NodeGroupOS: !Ref NodeGroupOS
         # Calico policy (APN security partner)
         CalicoIntegration: !Ref CalicoIntegration
-        OrgID: !Ref OrgID
         # Kubernetes add-ins
         ProvisionLoadBalancerController: !Ref LoadBalancerController
         ProvisionCertManager: !Ref CertManager
@@ -390,3 +376,5 @@ Resources:
 Outputs:
   KubernetesVersion:
     Value: !Ref KubernetesVersion
+  EKSClusterName:
+    Value: !Ref EKSClusterName

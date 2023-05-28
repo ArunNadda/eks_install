@@ -35,6 +35,7 @@ Metadata:
           - EKSPublicAccessEndpoint
           - AdditionalEKSAdminUserArn
           - AdditionalEKSAdminRoleArn
+          - RoleArn
       - Label:
           default: Default EKS node group configuration
         Parameters:
@@ -80,6 +81,8 @@ Metadata:
         default: Private subnet 3 ID
       VPCID:
         default: VPC ID
+      RoleArn:
+        defale: Role ARN
       AdditionalEKSAdminUserArn:
         default: Additional EKS admin ARN (IAM user)
       AdditionalEKSAdminRoleArn:
@@ -149,6 +152,9 @@ Parameters:
       your VPC.
     AllowedValues: [Enabled, Disabled]
     Default: Disabled
+  RoleArn:
+    Type: String
+    Default: ''
   AdditionalEKSAdminUserArn:
     Type: String
     Description: >-
